@@ -1,0 +1,125 @@
+<SimpleEncrypterLayout>:
+    orientation: 'vertical'  # Ориентация
+    padding: 20  # Отступы от границ виджета
+    spacing: 30  # Расстояние между виджетами
+
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 1  # Цвет фона
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    # Блок выбора языка
+    BoxLayout:
+        size_hint_y: 0.1 # Высота этого блока относительно высоты родителя
+        spacing: 10
+
+        # Левый блок — текст "Язык:"
+        Label:
+            text: "SELECT LANGUAGE:"  # Текст, который будет показан
+            size_hint_x: 0.3  # Ширина этого Label относительно родительского BoxLayout
+
+        # Правый блок — контейнер для двух кнопок-переключателей
+        BoxLayout:
+            size_hint_x: 0.7
+            spacing: 5  # Расстояние между двумя кнопками внутри
+
+            # Первая кнопка-переключатель
+            ToggleButton:
+                id: rus_btn
+                text: "RUS"
+                group: "lang"  # Общая группа
+                state: "normal"  # Кнопка отжата
+                on_release: app.on_lang_change("rus") # Событие когда отпустили кнопку
+
+            # Вторая кнопка-переключатель
+            ToggleButton:
+                id: eng_btn
+                text: "ENG"
+                group: "lang"
+                state: "down"
+                on_release: app.on_lang_change("eng")
+
+    BoxLayout:
+        size_hint_y: 0.1 # Высота этого блока относительно высоты родителя
+        spacing: 10
+
+        # Левый блок — текст "Режим:"
+        Label:
+            text: "SELECT MODE:"  # Текст, который будет показан
+            size_hint_x: 0.3  # Ширина этого Label относительно родительского BoxLayout
+
+        # Правый блок — контейнер для двух кнопок-переключателей
+        BoxLayout:
+            size_hint_x: 0.7
+            spacing: 5  # Расстояние между двумя кнопками внутри
+
+            # Первая кнопка-переключатель
+            ToggleButton:
+                id: enc_btn
+                text: "ENCRYPT"
+                group: "mode"  # Общая группа
+                state: "down"  # Кнопка нажата
+                on_release: app.on_mode_change("enc") # Событие когда отпустили кнопку
+
+            # Вторая кнопка-переключатель
+            ToggleButton:
+                id: dec_btn
+                text: "DECRYPT"
+                group: "mode"
+                on_release: app.on_mode_change("dec")
+
+
+    # Два поля
+    BoxLayout:
+        size_hint_y: 0.6
+        spacing: 20
+
+        # Левое поле — ввод текста
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 5
+
+            Label:
+                id: input_label
+                text: "ENTER TEXT:"
+                size_hint_y: 0.1
+
+            TextInput:
+                id: input_text
+                multiline: True
+                font_size: 14
+
+        # Правое поле — вывод результата
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 5
+
+            Label:
+                id: output_label
+                text: "TEXT OUTPUT:"
+                size_hint_y: 0.1
+
+            TextInput:
+                id: output_text
+                multiline: True
+                readonly: True
+                font_size: 14
+
+    # Две кнопки снизу
+    BoxLayout:
+        size_hint_y: 0.1
+        spacing: 20
+
+        # Кнопка действия (шифровать/расшифровать)
+        Button:
+            id: action_btn
+            text: "ENCRYPT"
+            on_release: app.on_action_press()
+
+        # Кнопка копирования
+        Button:
+            id: copy_btn
+            text: "COPY"
+            on_release: app.on_copy_press()
